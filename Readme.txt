@@ -16,3 +16,19 @@ morphognosis model.
 
 Paper:
 www.researchgate.net/publication/315112721_Morphognosis_the_shape_of_knowledge_in_space_and_time
+
+Examples:
+
+Morphognosis learning and control of mox.
+
+A mox is an organism occupying a cell in a cellular automaton. A mox has an orientation
+and can sense landmarks in front of it. It also has a sense for the proximity of food.
+A mox is capable of moving forward, turning, and consuming food.
+A primary purpose of the project is investigate morphognosis learning and control of the mox.
+github.com/portegys/MoxWorx
+
+
+Pufferfish nest-building with Morphognosis learning and control.
+
+A species of pufferfish builds circular nesting sites on the sea floor.
+This project simulates this nest-building behavior in a cellular automaton using the Morphognosis model.
