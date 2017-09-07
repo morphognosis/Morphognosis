@@ -17,7 +17,67 @@ morphognosis model.
 Paper:
 www.researchgate.net/publication/315112721_Morphognosis_the_shape_of_knowledge_in_space_and_time
 
-Examples:
+Morphognosis is a library for use in applications.
+
+Usage:
+
+// Initialize.
+init()
+{
+      // Let the event types be determined by the organism's sensors.
+      int NUM_SENSORS = 1;
+      int [] numEventTypes = new int[NUM_SENSORS];
+      int NUM_SENSOR_VALUES = 2;
+      numEventTypes[0] = NUM_SENSOR_VALUES;
+          
+      // This is the morphognostic to be updated to reflect the
+      // current state of the world.
+      morphognostic = new Morphognostic(NORTH, numEventTypes,
+                                        NUM_NEIGHBORHOODS,
+                                        NEIGHBORHOOD_INITIAL_DIMENSION,
+                                        NEIGHBORHOOD_DIMENSION_STRIDE,
+                                        NEIGHBORHOOD_DIMENSION_MULTIPLIER,
+                                        EPOCH_INTERVAL_STRIDE,
+                                        EPOCH_INTERVAL_MULTIPLIER);
+                                        
+      // Learned metamorphs.
+      // Metamorph: morphognostic -> response pair.
+      metamorphs  = new ArrayList<Metamorph>();
+}
+      
+// Sensor/response cycle.
+int cycle(sensors)
+{
+      // Create event for current state of organism.
+      event = new Event(sensors, currentX, currentY, currentTime);
+      
+      // Add new event to the history of events.
+      events.add(event); 
+      eventArray = convertToArray(events);   
+ 
+      // Update morphognostic with new event.
+      morphognostic.update(eventArray, currentX, currentY);
+
+      // Training?
+      if (training)
+      {
+         // Get appropriate training response.
+         response = getTrainingResponse(morphognostic);
+
+         // Update metamorphs with new morphognostic -> response pair.
+         Metamorph metamorph = new Metamorph(morphognostic.clone(), response);
+         metamorphs.add(metamorph);
+         
+      } else {  // Testing.
+      
+	     // Pattern-match morphognostic to metamorphs and retrieve associated response.
+	     response = getMetamorphResponse(morphognostic);
+      }
+
+      return(response);
+}
+
+Applications:
 
 Morphognosis learning and control of mox.
 
