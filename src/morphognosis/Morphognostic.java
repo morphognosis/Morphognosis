@@ -184,7 +184,12 @@ public class Morphognostic
                                (y4 >= s.dy) &&
                                (y4 < (s.dy + s.dimension)))
                            {
-                              s.typeDensities[d][t]            += 1.0f;
+                        	  if (s.typeDensities[d].length == 1)
+                        	  {
+                        		  s.typeDensities[d][0]            += (float)t;                        		  
+                        	  } else {
+                        		  s.typeDensities[d][t]            += 1.0f;
+                        	  }
                               s.events[x4 - s.dx][y4 - s.dy][d] = t;
                            }
                         }
@@ -328,7 +333,42 @@ public class Morphognostic
    public int[] numEventTypes;
    public int   eventDimensions;
 
-   // Constructor.
+   // Constructors.
+   public Morphognostic(int orientation, int eventDimensions)
+   {
+	  int[] numEventTypes = new int[eventDimensions];
+	  for (int i = 0; i < eventDimensions; i++)
+	  {
+		  numEventTypes[i] = 1;
+	  }
+      init(orientation, numEventTypes);
+   }
+
+
+   // Construct with parameters.
+   public Morphognostic(int orientation, int eventDimensions,
+                        int NUM_NEIGHBORHOODS,
+                        int NEIGHBORHOOD_INITIAL_DIMENSION,
+                        int NEIGHBORHOOD_DIMENSION_STRIDE,
+                        int NEIGHBORHOOD_DIMENSION_MULTIPLIER,
+                        int EPOCH_INTERVAL_STRIDE,
+                        int EPOCH_INTERVAL_MULTIPLIER
+                        )
+   {
+      this.NUM_NEIGHBORHOODS = NUM_NEIGHBORHOODS;
+      this.NEIGHBORHOOD_INITIAL_DIMENSION    = NEIGHBORHOOD_INITIAL_DIMENSION;
+      this.NEIGHBORHOOD_DIMENSION_STRIDE     = NEIGHBORHOOD_DIMENSION_STRIDE;
+      this.NEIGHBORHOOD_DIMENSION_MULTIPLIER = NEIGHBORHOOD_DIMENSION_MULTIPLIER;
+      this.EPOCH_INTERVAL_STRIDE             = EPOCH_INTERVAL_STRIDE;
+      this.EPOCH_INTERVAL_MULTIPLIER         = EPOCH_INTERVAL_MULTIPLIER;
+	  int[] numEventTypes = new int[eventDimensions];
+	  for (int i = 0; i < eventDimensions; i++)
+	  {
+		  numEventTypes[i] = 1;
+	  }
+      init(orientation, numEventTypes);
+   }
+
    public Morphognostic(int orientation, int[] numEventTypes)
    {
       init(orientation, numEventTypes);
@@ -353,7 +393,6 @@ public class Morphognostic
       this.EPOCH_INTERVAL_MULTIPLIER         = EPOCH_INTERVAL_MULTIPLIER;
       init(orientation, numEventTypes);
    }
-
 
    public void init(int orientation, int[] numEventTypes)
    {
