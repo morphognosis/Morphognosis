@@ -158,8 +158,8 @@ public class Morphognostic
                while (x3 < 0) { x3 += events.length; }
                while (x3 >= events.length) { x3 -= events.length; }
                int y3 = y1;
-               while (y3 < 0) { y3 += events.length; }
-               while (y3 >= events.length) { y3 -= events.length; }
+               while (y3 < 0) { y3 += events[0].length; }
+               while (y3 >= events[0].length) { y3 -= events[0].length; }
                for (int d = 0; d < eventDimensions; d++)
                {
                   int t = -1;
@@ -184,12 +184,14 @@ public class Morphognostic
                                (y4 >= s.dy) &&
                                (y4 < (s.dy + s.dimension)))
                            {
-                        	  if (s.typeDensities[d].length == 1)
-                        	  {
-                        		  s.typeDensities[d][0]            += (float)t;                        		  
-                        	  } else {
-                        		  s.typeDensities[d][t]            += 1.0f;
-                        	  }
+                              if (s.typeDensities[d].length == 1)
+                              {
+                                 s.typeDensities[d][0] += (float)t;
+                              }
+                              else
+                              {
+                                 s.typeDensities[d][t] += 1.0f;
+                              }
                               s.events[x4 - s.dx][y4 - s.dy][d] = t;
                            }
                         }
@@ -336,11 +338,11 @@ public class Morphognostic
    // Constructors.
    public Morphognostic(int orientation, int eventDimensions)
    {
-	  int[] numEventTypes = new int[eventDimensions];
-	  for (int i = 0; i < eventDimensions; i++)
-	  {
-		  numEventTypes[i] = 1;
-	  }
+      int[] numEventTypes = new int[eventDimensions];
+      for (int i = 0; i < eventDimensions; i++)
+      {
+         numEventTypes[i] = 1;
+      }
       init(orientation, numEventTypes);
    }
 
@@ -361,13 +363,14 @@ public class Morphognostic
       this.NEIGHBORHOOD_DIMENSION_MULTIPLIER = NEIGHBORHOOD_DIMENSION_MULTIPLIER;
       this.EPOCH_INTERVAL_STRIDE             = EPOCH_INTERVAL_STRIDE;
       this.EPOCH_INTERVAL_MULTIPLIER         = EPOCH_INTERVAL_MULTIPLIER;
-	  int[] numEventTypes = new int[eventDimensions];
-	  for (int i = 0; i < eventDimensions; i++)
-	  {
-		  numEventTypes[i] = 1;
-	  }
+      int[] numEventTypes = new int[eventDimensions];
+      for (int i = 0; i < eventDimensions; i++)
+      {
+         numEventTypes[i] = 1;
+      }
       init(orientation, numEventTypes);
    }
+
 
    public Morphognostic(int orientation, int[] numEventTypes)
    {
@@ -393,6 +396,7 @@ public class Morphognostic
       this.EPOCH_INTERVAL_MULTIPLIER         = EPOCH_INTERVAL_MULTIPLIER;
       init(orientation, numEventTypes);
    }
+
 
    public void init(int orientation, int[] numEventTypes)
    {
@@ -460,7 +464,7 @@ public class Morphognostic
                   }
                   for (int x2 = 0; x2 < s.events.length; x2++)
                   {
-                     for (int y2 = 0; y2 < s.events.length; y2++)
+                     for (int y2 = 0; y2 < s.events[0].length; y2++)
                      {
                         s.events[x2][y2][d] = -1;
                      }
@@ -504,7 +508,7 @@ public class Morphognostic
                   }
                   for (int x2 = 0; x2 < s.events.length; x2++)
                   {
-                     for (int y2 = 0; y2 < s.events.length; y2++)
+                     for (int y2 = 0; y2 < s.events[0].length; y2++)
                      {
                         Utility.saveInt(writer, s.events[x2][y2][d]);
                      }
@@ -558,7 +562,7 @@ public class Morphognostic
                   }
                   for (int x2 = 0; x2 < s.events.length; x2++)
                   {
-                     for (int y2 = 0; y2 < s.events.length; y2++)
+                     for (int y2 = 0; y2 < s.events[0].length; y2++)
                      {
                         s.events[x2][y2][d] = Utility.loadInt(reader);
                      }
@@ -601,7 +605,7 @@ public class Morphognostic
                   }
                   for (int x2 = 0; x2 < s1.events.length; x2++)
                   {
-                     for (int y2 = 0; y2 < s1.events.length; y2++)
+                     for (int y2 = 0; y2 < s1.events[0].length; y2++)
                      {
                         s1.events[x2][y2][d] = s2.events[x2][y2][d];
                      }
@@ -651,7 +655,7 @@ public class Morphognostic
                   for (int x2 = 0; x2 < s.events.length; x2++)
                   {
                      System.out.print("\t\t\t");
-                     for (int y2 = 0; y2 < s.events.length; y2++)
+                     for (int y2 = 0; y2 < s.events[0].length; y2++)
                      {
                         if (s.events[x2][y2][d] >= 0) { System.out.print(" "); }
                         System.out.print(s.events[x2][y2][d] + " ");

@@ -179,13 +179,13 @@ public class SectorDisplay extends JFrame implements Runnable
       {
          // Draw landmarks.
          float cellWidth  = (float)imageSize.width / (float)sector.events.length;
-         float cellHeight = (float)imageSize.height / (float)sector.events.length;
+         float cellHeight = (float)imageSize.height / (float)sector.events[0].length;
          for (x = 0, x2 = 0; x < sector.events.length;
               x++, x2 = (int)(cellWidth * (double)x))
          {
             for (y = 0, y2 = imageSize.height - (int)cellHeight;
-                 y < sector.events.length;
-                 y++, y2 = (int)(cellHeight * (double)(sector.events.length - (y + 1))))
+                 y < sector.events[0].length;
+                 y++, y2 = (int)(cellHeight * (double)(sector.events[0].length - (y + 1))))
             {
                Color color = getEventColor(0, sector.events[x][y][0]);
                for (d = 0; d < display.morphognostic.eventDimensions; d++)
@@ -210,7 +210,7 @@ public class SectorDisplay extends JFrame implements Runnable
             imageGraphics.drawLine(x2, 0, x2, h);
          }
          w = imageSize.width;
-         for (y = 1, y2 = (int)cellHeight; y < sector.events.length;
+         for (y = 1, y2 = (int)cellHeight; y < sector.events[0].length;
               y++, y2 = (int)(cellHeight * (double)y))
          {
             imageGraphics.drawLine(0, y2, w, y2);
