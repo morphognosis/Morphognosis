@@ -16,13 +16,23 @@ public class Metamorph
    public Morphognostic morphognostic;
 
    // Response.
-   public int response;
+   public int    response;
+   public String responseName;
 
    // Constructors.
    public Metamorph(Morphognostic morphognostic, int response)
    {
       this.morphognostic = morphognostic;
       this.response      = response;
+      responseName       = "";
+   }
+
+
+   public Metamorph(Morphognostic morphognostic, int response, String responseName)
+   {
+      this.morphognostic = morphognostic;
+      this.response      = response;
+      this.responseName  = responseName;
    }
 
 
@@ -48,18 +58,25 @@ public class Metamorph
 
       morphognostic.save(output);
       Utility.saveInt(writer, response);
+      writer.println(responseName);
       writer.flush();
    }
 
 
    // Load.
+   @SuppressWarnings({ "deprecation" })
    public static Metamorph load(FileInputStream input) throws IOException
    {
       DataInputStream reader        = new DataInputStream(input);
       Morphognostic   morphognostic = Morphognostic.load(input);
       int             response      = Utility.loadInt(reader);
+      String          responseName;
 
-      return(new Metamorph(morphognostic, response));
+      if ((responseName = reader.readLine()) == null)
+      {
+         throw (new IOException("Unexpected EOF"));
+      }
+      return(new Metamorph(morphognostic, response, responseName));
    }
 
 
@@ -69,5 +86,6 @@ public class Metamorph
       System.out.println("Morphognostic:");
       morphognostic.print();
       System.out.println("Response=" + response);
+      System.out.println("ResponseName=" + responseName);
    }
 }
