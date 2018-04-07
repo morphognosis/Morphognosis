@@ -2,13 +2,14 @@
 
 package morphognosis;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 import java.util.Vector;
 
 /*
@@ -479,7 +480,7 @@ public class Morphognostic
    // Save.
    public void save(FileOutputStream output) throws IOException
    {
-      PrintWriter writer = new PrintWriter(new OutputStreamWriter(output));
+      DataOutputStream writer = new DataOutputStream(new BufferedOutputStream(output));
 
       Utility.saveInt(writer, NUM_NEIGHBORHOODS);
       Utility.saveInt(writer, NEIGHBORHOOD_INITIAL_DIMENSION);
@@ -524,7 +525,7 @@ public class Morphognostic
    // Load.
    public static Morphognostic load(FileInputStream input) throws EOFException, IOException
    {
-      DataInputStream reader            = new DataInputStream(input);
+      DataInputStream reader            = new DataInputStream(new BufferedInputStream(input));
       int             NUM_NEIGHBORHOODS = Utility.loadInt(reader);
       int             NEIGHBORHOOD_INITIAL_DIMENSION    = Utility.loadInt(reader);
       int             NEIGHBORHOOD_DIMENSION_STRIDE     = Utility.loadInt(reader);

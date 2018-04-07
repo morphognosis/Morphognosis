@@ -3,11 +3,10 @@
 package morphognosis;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
 
 // Metamorph.
 public class Metamorph
@@ -54,28 +53,23 @@ public class Metamorph
    // Save.
    public void save(FileOutputStream output) throws IOException
    {
-      PrintWriter writer = new PrintWriter(new OutputStreamWriter(output));
+      DataOutputStream writer = new DataOutputStream(output);
 
       morphognostic.save(output);
       Utility.saveInt(writer, response);
-      writer.println(responseName);
+      writer.writeUTF(responseName);
       writer.flush();
    }
 
 
    // Load.
-   @SuppressWarnings({ "deprecation" })
    public static Metamorph load(FileInputStream input) throws IOException
    {
       DataInputStream reader        = new DataInputStream(input);
       Morphognostic   morphognostic = Morphognostic.load(input);
       int             response      = Utility.loadInt(reader);
-      String          responseName;
+      String          responseName  = reader.readUTF();
 
-      if ((responseName = reader.readLine()) == null)
-      {
-         throw (new IOException("Unexpected EOF"));
-      }
       return(new Metamorph(morphognostic, response, responseName));
    }
 
