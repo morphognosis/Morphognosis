@@ -29,6 +29,13 @@ public abstract class Utility
    }
 
 
+   // Save string.
+   public static String loadString(DataInputStream in) throws IOException
+   {
+      return(in.readUTF());
+   }
+
+
    // Save integer.
    public static void saveInt(DataOutputStream out, int value) throws IOException
    {
@@ -47,6 +54,13 @@ public abstract class Utility
    public static void saveDouble(DataOutputStream out, double value) throws IOException
    {
       out.writeDouble(value);
+   }
+
+
+   // Save string.
+   public static void saveString(DataOutputStream out, String value) throws IOException
+   {
+      out.writeUTF(value);
    }
 
 

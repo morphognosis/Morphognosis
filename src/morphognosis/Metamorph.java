@@ -4,8 +4,6 @@ package morphognosis;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 
 // Metamorph.
@@ -51,24 +49,20 @@ public class Metamorph
 
 
    // Save.
-   public void save(FileOutputStream output) throws IOException
+   public void save(DataOutputStream output) throws IOException
    {
-      DataOutputStream writer = new DataOutputStream(output);
-
       morphognostic.save(output);
-      Utility.saveInt(writer, response);
-      writer.writeUTF(responseName);
-      writer.flush();
+      Utility.saveInt(output, response);
+      Utility.saveString(output, responseName);
    }
 
 
    // Load.
-   public static Metamorph load(FileInputStream input) throws IOException
+   public static Metamorph load(DataInputStream input) throws IOException
    {
-      DataInputStream reader        = new DataInputStream(input);
-      Morphognostic   morphognostic = Morphognostic.load(input);
-      int             response      = Utility.loadInt(reader);
-      String          responseName  = reader.readUTF();
+      Morphognostic morphognostic = Morphognostic.load(input);
+      int           response      = Utility.loadInt(input);
+      String        responseName  = Utility.loadString(input);
 
       return(new Metamorph(morphognostic, response, responseName));
    }

@@ -2,13 +2,9 @@
 
 package morphognosis;
 
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.EOFException;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Vector;
 
@@ -478,21 +474,19 @@ public class Morphognostic
 
 
    // Save.
-   public void save(FileOutputStream output) throws IOException
+   public void save(DataOutputStream output) throws IOException
    {
-      DataOutputStream writer = new DataOutputStream(new BufferedOutputStream(output));
-
-      Utility.saveInt(writer, NUM_NEIGHBORHOODS);
-      Utility.saveInt(writer, NEIGHBORHOOD_INITIAL_DIMENSION);
-      Utility.saveInt(writer, NEIGHBORHOOD_DIMENSION_STRIDE);
-      Utility.saveInt(writer, NEIGHBORHOOD_DIMENSION_MULTIPLIER);
-      Utility.saveInt(writer, EPOCH_INTERVAL_STRIDE);
-      Utility.saveInt(writer, EPOCH_INTERVAL_MULTIPLIER);
-      Utility.saveInt(writer, orientation);
-      Utility.saveInt(writer, eventDimensions);
+      Utility.saveInt(output, NUM_NEIGHBORHOODS);
+      Utility.saveInt(output, NEIGHBORHOOD_INITIAL_DIMENSION);
+      Utility.saveInt(output, NEIGHBORHOOD_DIMENSION_STRIDE);
+      Utility.saveInt(output, NEIGHBORHOOD_DIMENSION_MULTIPLIER);
+      Utility.saveInt(output, EPOCH_INTERVAL_STRIDE);
+      Utility.saveInt(output, EPOCH_INTERVAL_MULTIPLIER);
+      Utility.saveInt(output, orientation);
+      Utility.saveInt(output, eventDimensions);
       for (int d = 0; d < eventDimensions; d++)
       {
-         Utility.saveInt(writer, numEventTypes[d]);
+         Utility.saveInt(output, numEventTypes[d]);
       }
       for (Neighborhood n : neighborhoods)
       {
@@ -505,40 +499,38 @@ public class Morphognostic
                {
                   for (int i = 0; i < numEventTypes[d]; i++)
                   {
-                     Utility.saveFloat(writer, s.typeDensities[d][i]);
+                     Utility.saveFloat(output, s.typeDensities[d][i]);
                   }
                   for (int x2 = 0; x2 < s.events.length; x2++)
                   {
                      for (int y2 = 0; y2 < s.events[0].length; y2++)
                      {
-                        Utility.saveInt(writer, s.events[x2][y2][d]);
+                        Utility.saveInt(output, s.events[x2][y2][d]);
                      }
                   }
                }
             }
          }
       }
-      writer.flush();
    }
 
 
    // Load.
-   public static Morphognostic load(FileInputStream input) throws EOFException, IOException
+   public static Morphognostic load(DataInputStream input) throws EOFException, IOException
    {
-      DataInputStream reader            = new DataInputStream(new BufferedInputStream(input));
-      int             NUM_NEIGHBORHOODS = Utility.loadInt(reader);
-      int             NEIGHBORHOOD_INITIAL_DIMENSION    = Utility.loadInt(reader);
-      int             NEIGHBORHOOD_DIMENSION_STRIDE     = Utility.loadInt(reader);
-      int             NEIGHBORHOOD_DIMENSION_MULTIPLIER = Utility.loadInt(reader);
-      int             EPOCH_INTERVAL_STRIDE             = Utility.loadInt(reader);
-      int             EPOCH_INTERVAL_MULTIPLIER         = Utility.loadInt(reader);
-      int             orientation     = Utility.loadInt(reader);
-      int             eventDimensions = Utility.loadInt(reader);
+      int NUM_NEIGHBORHOODS = Utility.loadInt(input);
+      int NEIGHBORHOOD_INITIAL_DIMENSION    = Utility.loadInt(input);
+      int NEIGHBORHOOD_DIMENSION_STRIDE     = Utility.loadInt(input);
+      int NEIGHBORHOOD_DIMENSION_MULTIPLIER = Utility.loadInt(input);
+      int EPOCH_INTERVAL_STRIDE             = Utility.loadInt(input);
+      int EPOCH_INTERVAL_MULTIPLIER         = Utility.loadInt(input);
+      int orientation     = Utility.loadInt(input);
+      int eventDimensions = Utility.loadInt(input);
 
       int[] numEventTypes = new int[eventDimensions];
       for (int d = 0; d < eventDimensions; d++)
       {
-         numEventTypes[d] = Utility.loadInt(reader);
+         numEventTypes[d] = Utility.loadInt(input);
       }
       Morphognostic m = new Morphognostic(orientation, numEventTypes,
                                           NUM_NEIGHBORHOODS,
@@ -559,13 +551,13 @@ public class Morphognostic
                {
                   for (int i = 0; i < numEventTypes[d]; i++)
                   {
-                     s.typeDensities[d][i] = Utility.loadFloat(reader);
+                     s.typeDensities[d][i] = Utility.loadFloat(input);
                   }
                   for (int x2 = 0; x2 < s.events.length; x2++)
                   {
                      for (int y2 = 0; y2 < s.events[0].length; y2++)
                      {
-                        s.events[x2][y2][d] = Utility.loadInt(reader);
+                        s.events[x2][y2][d] = Utility.loadInt(input);
                      }
                   }
                }
