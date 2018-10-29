@@ -54,6 +54,7 @@ public class Metamorph
       morphognostic.save(output);
       Utility.saveInt(output, response);
       Utility.saveString(output, responseName);
+      output.flush();
    }
 
 

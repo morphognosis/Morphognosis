@@ -512,6 +512,7 @@ public class Morphognostic
             }
          }
       }
+      output.flush();
    }
 
 
