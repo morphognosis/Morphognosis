@@ -615,14 +615,7 @@ public class Morphognostic
    // Print.
    public void print()
    {
-      System.out.println("NUM_NEIGHBORHOODS=" + NUM_NEIGHBORHOODS);
-      System.out.println("NEIGHBORHOOD_INITIAL_DIMENSION=" + NEIGHBORHOOD_INITIAL_DIMENSION);
-      System.out.println("NEIGHBORHOOD_DIMENSION_STRIDE=" + NEIGHBORHOOD_DIMENSION_STRIDE);
-      System.out.println("NEIGHBORHOOD_DIMENSION_MULTIPLIER=" + NEIGHBORHOOD_DIMENSION_MULTIPLIER);
-      System.out.println("EPOCH_INTERVAL_STRIDE=" + EPOCH_INTERVAL_STRIDE);
-      System.out.println("EPOCH_INTERVAL_MULTIPLIER=" + EPOCH_INTERVAL_MULTIPLIER);
-      System.out.println("orientation=" + orientation);
-      System.out.println("eventDimensions=" + eventDimensions);
+      printParameters();
       for (int i = 0; i < neighborhoods.size(); i++)
       {
          Neighborhood n = neighborhoods.get(i);
@@ -660,5 +653,19 @@ public class Morphognostic
             }
          }
       }
+   }
+
+
+   // Print parameters.
+   public void printParameters()
+   {
+      System.out.println("NUM_NEIGHBORHOODS=" + NUM_NEIGHBORHOODS);
+      System.out.println("NEIGHBORHOOD_INITIAL_DIMENSION=" + NEIGHBORHOOD_INITIAL_DIMENSION);
+      System.out.println("NEIGHBORHOOD_DIMENSION_STRIDE=" + NEIGHBORHOOD_DIMENSION_STRIDE);
+      System.out.println("NEIGHBORHOOD_DIMENSION_MULTIPLIER=" + NEIGHBORHOOD_DIMENSION_MULTIPLIER);
+      System.out.println("EPOCH_INTERVAL_STRIDE=" + EPOCH_INTERVAL_STRIDE);
+      System.out.println("EPOCH_INTERVAL_MULTIPLIER=" + EPOCH_INTERVAL_MULTIPLIER);
+      System.out.println("orientation=" + orientation);
+      System.out.println("eventDimensions=" + eventDimensions);
    }
 }
